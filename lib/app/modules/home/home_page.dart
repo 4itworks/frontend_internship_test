@@ -11,17 +11,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
-  //use 'controller' variable to access controller
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          "User List",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: Column(
-        children: <Widget>[],
+      body: ListView.builder(
+        itemCount: 15,
+        itemBuilder: (index, contetxt) {
+          return ListTile(
+            leading: CircleAvatar(),
+            title: Text("Name"),
+            subtitle: Text("Email"),
+          );
+        },
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text("Add User", style: TextStyle(fontSize: 16),),
+        icon: Icon(Icons.add),
+      ),
+      backgroundColor: Colors.white,
     );
   }
 }
