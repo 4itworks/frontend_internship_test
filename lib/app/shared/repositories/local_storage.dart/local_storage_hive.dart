@@ -20,14 +20,18 @@ class LocalStorageHive {
 
   Future<List<UserModel>> get() async{
     var box = await _instance.future;
-    return box.values.toList().cast<UserModel>();
+    return HiveList(box).reversed.toList().cast<UserModel>();
+    //return box.values.toList().cast<UserModel>();
   }
 
-  Future save() async {
+  Future<UserModel> getAt(int index) async {
     var box = await _instance.future;
-    //box.put(key, value) TODO
-
+    return box.getAt(index);
   }
 
+  Future save(UserModel user) async {
+    var box = await _instance.future;
+    box.add(user);
+  }
 
 }

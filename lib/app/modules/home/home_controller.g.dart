@@ -12,25 +12,25 @@ mixin _$HomeController on _HomeControllerBase, Store {
   final _$usersAtom = Atom(name: '_HomeControllerBase.users');
 
   @override
-  ObservableFuture<List<UserViewModel>> get users {
+  ObservableFuture<List<UserModel>> get users {
     _$usersAtom.context.enforceReadPolicy(_$usersAtom);
     _$usersAtom.reportObserved();
     return super.users;
   }
 
   @override
-  set users(ObservableFuture<List<UserViewModel>> value) {
+  set users(ObservableFuture<List<UserModel>> value) {
     _$usersAtom.context.conditionallyRunInAction(() {
       super.users = value;
       _$usersAtom.reportChanged();
     }, _$usersAtom, name: '${_$usersAtom.name}_set');
   }
 
-  final _$fetchUsersAsyncAction = AsyncAction('fetchUsers');
+  final _$_initAsyncAction = AsyncAction('_init');
 
   @override
-  Future<dynamic> fetchUsers() {
-    return _$fetchUsersAsyncAction.run(() => super.fetchUsers());
+  Future _init() {
+    return _$_initAsyncAction.run(() => super._init());
   }
 
   @override

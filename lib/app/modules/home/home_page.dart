@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:frontent_internship_test/app/modules/home/widgets/home_body.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,11 +11,8 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends ModularState<HomePage, HomeController> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+Widget homeAppBar(){
+  return AppBar(
         title: Text(
           "User List",
           style: TextStyle(
@@ -24,22 +22,27 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-      ),
-      body: ListView.builder(
-        itemCount: 15,
-        itemBuilder: (index, contetxt) {
-          return ListTile(
-            leading: CircleAvatar(),
-            title: Text("Name"),
-            subtitle: Text("Email"),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text("Add User", style: TextStyle(fontSize: 16),),
-        icon: Icon(Icons.add),
-      ),
+      );
+}
+
+Widget buttonAdd(controller) {
+  return FloatingActionButton.extended(
+    onPressed: controller.increment,
+    label: Text(
+      "Add User",
+      style: TextStyle(fontSize: 16),
+    ),
+    icon: Icon(Icons.add),
+  );
+}
+
+class _HomePageState extends ModularState<HomePage, HomeController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: homeAppBar(),
+      body: HomeBody(controller: controller),
+      floatingActionButton: buttonAdd(controller),
       backgroundColor: Colors.white,
     );
   }
