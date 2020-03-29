@@ -3,7 +3,6 @@ import 'package:frontent_internship_test/data/dummy_data.dart';
 
 import '../models/user.dart';
 import '../components/user_item.dart';
-import '../utils/app_routes.dart';
 import './user_add_screen.dart';
 
 class UserListScreen extends StatefulWidget {
@@ -12,13 +11,7 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  final List<User> users = DUMMY_USERS;
-
-  _addUserScreen(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      AppRoutes.USER_ADD_SCREEN,
-    );
-  }
+  final List<User> _users = DUMMY_USERS;
 
   _addUser(
       String name,
@@ -49,7 +42,7 @@ class _UserListScreenState extends State<UserListScreen> {
     );
 
     setState(() {
-      users.add(newUser);
+      _users.add(newUser);
     });
 
     Navigator.of(context).pop();
@@ -65,9 +58,9 @@ class _UserListScreenState extends State<UserListScreen> {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: users.length,
+        itemCount: _users.length,
         itemBuilder: (ctx, index) {
-          final ur = users[index];
+          final ur = _users[index];
           return UserItem(ur);
         },
       ),

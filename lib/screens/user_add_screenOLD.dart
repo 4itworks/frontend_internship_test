@@ -22,48 +22,48 @@ class UserAddScreen extends StatefulWidget {
 }
 
 class _UserAddScreenState extends State<UserAddScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final _nameController = TextEditingController();
-    final _emailController = TextEditingController();
-    final _phoneController = TextEditingController();
-    final _birthController = TextEditingController();
-    final _cpfController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _birthController = TextEditingController();
+  final _cpfController = TextEditingController();
 
-    final _aCepController = TextEditingController();
-    final _aStreetController = TextEditingController();
-    final _aNumberController = TextEditingController();
-    final _aComplementController = TextEditingController();
-    final _aDistrictController = TextEditingController();
-    final _aCityController = TextEditingController();
-    final _aStateController = TextEditingController();
+  final _aCepController = TextEditingController();
+  final _aStreetController = TextEditingController();
+  final _aNumberController = TextEditingController();
+  final _aComplementController = TextEditingController();
+  final _aDistrictController = TextEditingController();
+  final _aCityController = TextEditingController();
+  final _aStateController = TextEditingController();
 
-    _submitForm() {
-      final name = _nameController.text;
-      final email = _emailController.text;
-      final phone = _phoneController.text;
-      final birth = _birthController.text;
-      final cpf = _cpfController.text;
+  _submitForm() {
+    final name = _nameController.text;
+    final email = _emailController.text;
+    final phone = _phoneController.text;
+    final birth = _birthController.text;
+    final cpf = _cpfController.text;
 
-      final aCep = _aCepController.text;
-      final aStreet = _aStreetController.text;
-      final aNumber = _aNumberController.text;
-      final aComplement = _aComplementController.text;
-      final aDistrict = _aDistrictController.text;
-      final aCity = _aCityController.text;
-      final aState = _aStateController.text;
+    final aCep = _aCepController.text;
+    final aStreet = _aStreetController.text;
+    final aNumber = _aNumberController.text;
+    final aComplement = _aComplementController.text;
+    final aDistrict = _aDistrictController.text;
+    final aCity = _aCityController.text;
+    final aState = _aStateController.text;
 
-      if (name.isEmpty ||
-          phone.length != 13 ||
-          cpf.length != 11 ||
-          aCep.length != 8) {
-        return;
-      }
-
-      widget.onSubmit(name, email, phone, birth, cpf, aCep, aStreet, aNumber,
-          aComplement, aDistrict, aCity, aState);
+    if (name.isEmpty ||
+        phone.length != 13 ||
+        cpf.length != 11 ||
+        aCep.length != 8) {
+      return;
     }
 
+    widget.onSubmit(name, email, phone, birth, cpf, aCep, aStreet, aNumber,
+        aComplement, aDistrict, aCity, aState);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register New User'),
@@ -84,6 +84,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.all(15),
               child: TextField(
                 controller: _nameController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Name',
@@ -94,6 +95,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _emailController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -104,7 +106,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _phoneController,
-                maxLength: 13,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Phone',
@@ -115,6 +117,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _birthController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Date of Birth',
@@ -125,7 +128,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _cpfController,
-                maxLength: 11,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'CPF',
@@ -144,7 +147,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.all(15),
               child: TextField(
                 controller: _aCepController,
-                maxLength: 8,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'CEP',
@@ -155,6 +158,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _aStreetController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Street',
@@ -171,6 +175,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
                     height: 55,
                     child: TextField(
                       controller: _aNumberController,
+                      onSubmitted: (_) => _submitForm(),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Number',
@@ -185,6 +190,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
                     height: 55,
                     child: TextField(
                       controller: _aComplementController,
+                      onSubmitted: (_) => _submitForm(),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Complement',
@@ -198,6 +204,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.all(15),
               child: TextField(
                 controller: _aDistrictController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'District',
@@ -208,6 +215,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _aCityController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'City',
@@ -218,6 +226,7 @@ class _UserAddScreenState extends State<UserAddScreen> {
               padding: const EdgeInsets.only(bottom: 15, left: 15, right: 15),
               child: TextField(
                 controller: _aStateController,
+                onSubmitted: (_) => _submitForm(),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'State',
@@ -231,7 +240,23 @@ class _UserAddScreenState extends State<UserAddScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _submitForm,
+        onPressed: () {
+          final name = _nameController.text;
+          final email = _emailController.text;
+          final phone = _phoneController.text;
+          final birth = _birthController.text;
+          final cpf = _cpfController.text;
+
+          final aCep = _aCepController.text;
+          final aStreet = _aStreetController.text;
+          final aNumber = _aNumberController.text;
+          final aComplement = _aComplementController.text;
+          final aDistrict = _aDistrictController.text;
+          final aCity = _aCityController.text;
+          final aState = _aStateController.text;
+          widget.onSubmit(name, email, phone, birth, cpf, aCep, aStreet,
+              aNumber, aComplement, aDistrict, aCity, aState);
+        },
         icon: Icon(
           Icons.check,
           color: Colors.white,
