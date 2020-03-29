@@ -27,7 +27,7 @@ Widget homeAppBar(){
 
 Widget buttonAdd(controller) {
   return FloatingActionButton.extended(
-    onPressed: controller.increment,
+    onPressed: (){},
     label: Text(
       "Add User",
       style: TextStyle(fontSize: 16),

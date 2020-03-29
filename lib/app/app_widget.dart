@@ -7,9 +7,6 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       navigatorKey: Modular.navigatorKey,
       title: 'frontent_internship_test',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,
       debugShowCheckedModeBanner: false,
