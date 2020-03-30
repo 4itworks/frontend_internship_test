@@ -56,9 +56,9 @@ class HomeBody extends StatelessWidget {
     return Observer(
       builder: (_) {
         return ListView.builder(
-          itemCount: controller.users.value.length,
+          itemCount: controller.store.users.value.length,
           itemBuilder: (context, index) {
-            var user = controller.users.value[index];
+            var user = controller.store.users.value[index];
             return ListTile(
               leading: avatarImage(user.name),
               title: Text(user.name),

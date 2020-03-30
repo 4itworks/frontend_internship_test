@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:frontent_internship_test/app/modules/home/widgets/home_body.dart';
 import 'home_controller.dart';
+import 'widgets/button_add.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -25,24 +26,13 @@ Widget homeAppBar(){
       );
 }
 
-Widget buttonAdd(controller) {
-  return FloatingActionButton.extended(
-    onPressed: (){},
-    label: Text(
-      "Add User",
-      style: TextStyle(fontSize: 16),
-    ),
-    icon: Icon(Icons.add),
-  );
-}
-
 class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: homeAppBar(),
       body: HomeBody(controller: controller),
-      floatingActionButton: buttonAdd(controller),
+      floatingActionButton: ButtonAddWidget(controller: controller),
       backgroundColor: Colors.white,
     );
   }

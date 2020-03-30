@@ -12,7 +12,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState
     extends ModularState<RegisterPage, RegisterController> {
-
   Widget headerContainer(String text) {
     return Container(
       padding: EdgeInsets.only(top: 25, left: 10),
@@ -28,7 +27,8 @@ class _RegisterPageState
     );
   }
 
-  Widget field(String fieldName, TextEditingController controller) {
+  Widget field(String fieldName, TextEditingController controller,
+      {TextInputType inputType = TextInputType.text}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
       child: TextField(
@@ -52,6 +52,7 @@ class _RegisterPageState
               fontWeight: FontWeight.w500,
               fontSize: 18),
         ),
+        keyboardType: inputType,
       ),
     );
   }
@@ -71,9 +72,7 @@ class _RegisterPageState
             borderRadius: BorderRadius.circular(6.0),
           ),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black,
-              ),
+              borderSide: BorderSide(color: Colors.black),
               borderRadius: BorderRadius.circular(6.0)),
           hintText: "Number",
           hintStyle: TextStyle(
@@ -81,6 +80,7 @@ class _RegisterPageState
               fontWeight: FontWeight.w500,
               fontSize: 18),
         ),
+        keyboardType: TextInputType.number,
       ),
     );
   }
@@ -114,33 +114,47 @@ class _RegisterPageState
     );
   }
 
-  Widget registerButton(){
-    //TODO Set onPressed function
+  Widget registerButton() {
     return ButtonTheme(
-        height: 80,
-        padding: EdgeInsets.all(0),
+      height: 80,
+      padding: EdgeInsets.all(0),
+      child: Container(
         child: FlatButton(
-          onPressed: () {},
+          onPressed: controller.allFilled() ? controller.saveUser : null,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
-                child: Icon(Icons.check),
+                child: Icon(
+                  Icons.check,
+                  color: Colors.white,
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0.20),
                 child: Text(
                   "REGISTER USER",
-                  style: TextStyle(fontSize: 23),
+                  style: TextStyle(fontSize: 23, color: Colors.white),
                 ),
               ),
             ],
           ),
-          color: Color(0xFFAAAAAA),
+          disabledColor: Color(0xFFAAAAAA),
         ),
-      );
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF1B5E20),
+              Color(0xFF388E3C),
+              Color(0xFF4CAF50),
+            ],
+            stops: [-0.0047, 0.5133, 1],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -154,9 +168,9 @@ class _RegisterPageState
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
+        leading: BackButton(color: Colors.black,),
       ),
       body: SingleChildScrollView(
-        //TODO Set texts' controllers
         child: Column(
           children: <Widget>[
             headerContainer("PERSONAL DATA"),
@@ -164,11 +178,15 @@ class _RegisterPageState
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
               child: Column(
                 children: <Widget>[
-                  field("Name", null),
-                  field("Email", null),
-                  field("Phone", null),
-                  field("Date of Birth", null),
-                  field("CPF", null),
+                  field("Name", controller.nameController),
+                  field("Email", controller.emailController,
+                      inputType: TextInputType.emailAddress),
+                  field("Phone", controller.phoneController,
+                      inputType: TextInputType.phone),
+                  field("Date of Birth", controller.dateController,
+                      inputType: TextInputType.number),
+                  field("CPF", controller.cpfController,
+                      inputType: TextInputType.number),
                 ],
               ),
             ),
@@ -178,18 +196,19 @@ class _RegisterPageState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  field("CEP", null),
-                  field("Street", null),
+                  field("CEP", controller.cepController,
+                      inputType: TextInputType.number),
+                  field("Street", controller.streetController),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      numberField(null),
-                      complementField(null),
+                      numberField(controller.numberController),
+                      complementField(controller.complementController),
                     ],
                   ),
-                  field("District", null),
-                  field("City", null),
-                  field("State", null),
+                  field("District", controller.districtController),
+                  field("City", controller.cityController),
+                  field("State", controller.stateController),
                 ],
               ),
             ),
@@ -200,5 +219,4 @@ class _RegisterPageState
       bottomNavigationBar: registerButton(),
     );
   }
-
 }
