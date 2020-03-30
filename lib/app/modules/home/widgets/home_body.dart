@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:frontent_internship_test/app/modules/home/home_controller.dart';
 
 class HomeBody extends StatelessWidget {
@@ -51,6 +52,10 @@ class HomeBody extends StatelessWidget {
               leading: avatarImage(user.colors, user.name),
               title: Text(user.name),
               subtitle: Text(user.email),
+              onTap: () {
+                //int id = controller.store.users.value.length - 1 - index;
+                Modular.to.pushNamed('/user/', arguments: user);
+              },
             );
           },
         );

@@ -30,4 +30,10 @@ abstract class _UserStoreBase with Store {
     localList.add(user);
     users = ObservableFuture.value(localList.reversed.toList());
   }
+
+  UserModel getAt(int id){
+    print(users.value[id].name);
+    return users.value.elementAt(id);
+  }
+
 }

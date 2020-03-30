@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:frontent_internship_test/app/shared/widgets/header_container.dart';
 import 'register_controller.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -12,21 +13,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState
     extends ModularState<RegisterPage, RegisterController> {
-  Widget headerContainer(String text) {
-    return Container(
-      padding: EdgeInsets.only(top: 25, left: 10),
-      height: 45,
-      width: double.infinity,
-      color: Color(0xFFFAFAFF),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Color(0xFF9A99A2),
-        ),
-      ),
-    );
-  }
-
   Widget field(String fieldName, TextEditingController controller,
       {TextInputType inputType = TextInputType.text}) {
     return Padding(
@@ -173,7 +159,7 @@ class _RegisterPageState
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            headerContainer("PERSONAL DATA"),
+            HeaderContainer(text: "PERSONAL DATA"),
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
               child: Column(
@@ -190,7 +176,7 @@ class _RegisterPageState
                 ],
               ),
             ),
-            headerContainer("ADDRESS DATA"),
+            HeaderContainer(text: "ADDRESS DATA"),
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
               child: Column(
