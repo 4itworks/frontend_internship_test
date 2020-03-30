@@ -73,6 +73,8 @@ abstract class _RegisterControllerBase with Store {
       ..cpf = cpfController.text
       ..cep = cepController.text
       ..street = streetController.text
+      ..number = numberController.text
+      ..complement = complementController.text
       ..district = districtController.text
       ..city = cityController.text
       ..state = stateController.text
