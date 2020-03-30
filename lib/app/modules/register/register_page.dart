@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:frontent_internship_test/app/shared/widgets/header_container.dart';
 import 'register_controller.dart';
 
@@ -13,12 +15,17 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState
     extends ModularState<RegisterPage, RegisterController> {
-  Widget field(String fieldName, TextEditingController controller,
-      {TextInputType inputType = TextInputType.text}) {
+  bool validate = false;
+
+  Widget field(String fieldName, TextEditingController fieldController,
+      {TextInputType inputType = TextInputType.text,
+      List<TextInputFormatter> inputFormatters,
+      int maxLength = 40,
+      FormFieldValidator<String> validator}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
-      child: TextField(
-        controller: controller,
+      child: TextFormField(
+        controller: fieldController,
         cursorColor: Colors.black,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -38,17 +45,23 @@ class _RegisterPageState
               fontWeight: FontWeight.w500,
               fontSize: 18),
         ),
+        inputFormatters: inputFormatters,
+        maxLength: maxLength,
         keyboardType: inputType,
+        validator: validator,
+        autovalidate: controller.allFilled()
+              ? controller.emailIsOk ? true : false
+              : false,
       ),
     );
   }
 
-  Widget numberField(TextEditingController controller) {
+  Widget numberField(TextEditingController fieldController) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.3,
       padding: const EdgeInsets.only(bottom: 14.0),
       child: TextField(
-        controller: controller,
+        controller: fieldController,
         cursorColor: Colors.black,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -67,16 +80,17 @@ class _RegisterPageState
               fontSize: 18),
         ),
         keyboardType: TextInputType.number,
+        maxLength: 8,
       ),
     );
   }
 
-  Widget complementField(TextEditingController controller) {
+  Widget complementField(TextEditingController fieldController) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.55,
       padding: const EdgeInsets.only(bottom: 14.0),
       child: TextField(
-        controller: controller,
+        controller: fieldController,
         cursorColor: Colors.black,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -96,6 +110,7 @@ class _RegisterPageState
               fontWeight: FontWeight.w500,
               fontSize: 18),
         ),
+        maxLength: 30,
       ),
     );
   }
@@ -106,7 +121,9 @@ class _RegisterPageState
       padding: EdgeInsets.all(0),
       child: Container(
         child: FlatButton(
-          onPressed: controller.allFilled() ? controller.saveUser : null,
+          onPressed: controller.allFilled()
+              ? controller.emailIsOk ? controller.saveUser : null
+              : null,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -154,7 +171,9 @@ class _RegisterPageState
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: BackButton(color: Colors.black,),
+        leading: BackButton(
+          color: Colors.black,
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -164,15 +183,45 @@ class _RegisterPageState
               padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
               child: Column(
                 children: <Widget>[
-                  field("Name", controller.nameController),
+                  field("Name", controller.nameController, maxLength: 60),
                   field("Email", controller.emailController,
-                      inputType: TextInputType.emailAddress),
+                      inputType: TextInputType.emailAddress,
+                      validator: (value) {
+                    return value.contains("@")
+                        ? null
+                        : "That email is not valid";
+                  }),
                   field("Phone", controller.phoneController,
-                      inputType: TextInputType.phone),
+                      inputType: TextInputType.phone,
+                      inputFormatters: [
+                        MaskTextInputFormatter(
+                            mask: '+## (##) #.####-####',
+                            filter: {"#": RegExp(r'[0-9]')})
+                      ],
+                      maxLength: 20, validator: (value) {
+                    return value.length < 20
+                        ? "That phone number is not valid"
+                        : null;
+                  }),
                   field("Date of Birth", controller.dateController,
-                      inputType: TextInputType.number),
+                      inputType: TextInputType.number,
+                      inputFormatters: [
+                        MaskTextInputFormatter(
+                            mask: '##/##/####', filter: {"#": RegExp(r'[0-9]')})
+                      ],
+                      maxLength: 10, validator: (value) {
+                    return value.length < 10 ? "That date is not valid" : null;
+                  }),
                   field("CPF", controller.cpfController,
-                      inputType: TextInputType.number),
+                      inputType: TextInputType.number,
+                      inputFormatters: [
+                        MaskTextInputFormatter(
+                            mask: '###.###.###-##',
+                            filter: {"#": RegExp(r'[0-9]')})
+                      ],
+                      maxLength: 14, validator: (value) {
+                    return value.length < 14 ? "That CPF is not valid" : null;
+                  }),
                 ],
               ),
             ),
@@ -183,7 +232,14 @@ class _RegisterPageState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   field("CEP", controller.cepController,
-                      inputType: TextInputType.number),
+                      inputType: TextInputType.number,
+                      inputFormatters: [
+                        MaskTextInputFormatter(
+                            mask: '#####-###', filter: {"#": RegExp(r'[0-9]')})
+                      ],
+                      maxLength: 9, validator: (value) {
+                    return value.length < 9 ? "That CEP is not valid" : null;
+                  }),
                   field("Street", controller.streetController),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

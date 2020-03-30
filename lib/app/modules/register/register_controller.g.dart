@@ -26,28 +26,27 @@ mixin _$RegisterController on _RegisterControllerBase, Store {
     }, _$controllersAtom, name: '${_$controllersAtom.name}_set');
   }
 
-  final _$disableRegisterAtom =
-      Atom(name: '_RegisterControllerBase.disableRegister');
+  final _$emailIsOkAtom = Atom(name: '_RegisterControllerBase.emailIsOk');
 
   @override
-  bool get disableRegister {
-    _$disableRegisterAtom.context.enforceReadPolicy(_$disableRegisterAtom);
-    _$disableRegisterAtom.reportObserved();
-    return super.disableRegister;
+  bool get emailIsOk {
+    _$emailIsOkAtom.context.enforceReadPolicy(_$emailIsOkAtom);
+    _$emailIsOkAtom.reportObserved();
+    return super.emailIsOk;
   }
 
   @override
-  set disableRegister(bool value) {
-    _$disableRegisterAtom.context.conditionallyRunInAction(() {
-      super.disableRegister = value;
-      _$disableRegisterAtom.reportChanged();
-    }, _$disableRegisterAtom, name: '${_$disableRegisterAtom.name}_set');
+  set emailIsOk(bool value) {
+    _$emailIsOkAtom.context.conditionallyRunInAction(() {
+      super.emailIsOk = value;
+      _$emailIsOkAtom.reportChanged();
+    }, _$emailIsOkAtom, name: '${_$emailIsOkAtom.name}_set');
   }
 
   @override
   String toString() {
     final string =
-        'controllers: ${controllers.toString()},disableRegister: ${disableRegister.toString()}';
+        'controllers: ${controllers.toString()},emailIsOk: ${emailIsOk.toString()}';
     return '{$string}';
   }
 }

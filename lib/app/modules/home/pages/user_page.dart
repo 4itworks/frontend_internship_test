@@ -61,23 +61,9 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  String formatPhone() {
-    String phone = widget.user.phone;
-    try {
-      var country = phone.substring(0, 2);
-      var op = phone.substring(2, 4);
-      var extraNine = phone.substring(4, 5);
-      var phoneFirstPart = phone.substring(5, 9);
-      var phoneLastPart = phone.substring(9, phone.length);
-      phone = "+$country ($op) $extraNine.$phoneFirstPart-$phoneLastPart";
-    } catch (e) {
-      FlutterError.onError(FlutterErrorDetails(exception: e.toString()));
-    }
-    return phone;
-  }
-
   @override
   Widget build(BuildContext context) {
+    print(widget.user.dateBirth);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -94,7 +80,7 @@ class _UserPageState extends State<UserPage> {
           nameAvatarContainer(),
           HeaderContainer(text: "PERSONAL DATA"),
           profileField("Email", widget.user.email),
-          profileField("Phone", formatPhone()),
+          profileField("Phone", widget.user.phone),
           profileField("Date of Birth", widget.user.dateBirth),
           profileField("CPF", widget.user.cpf),
           HeaderContainer(text: "ADDRESS DATA"),

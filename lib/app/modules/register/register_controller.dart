@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:frontent_internship_test/app/shared/models/user_model.dart';
 import 'package:frontent_internship_test/app/shared/repositories/local_storage.dart/local_storage_hive.dart';
 import 'package:frontent_internship_test/app/shared/store/user_store.dart';
-import 'package:mobx/mobx.dart';
-
 import 'utils/user_avatar_colors.dart';
-
 part 'register_controller.g.dart';
 
 class RegisterController = _RegisterControllerBase with _$RegisterController;
@@ -45,23 +43,8 @@ abstract class _RegisterControllerBase with Store {
     return false;
   }
 
-  @observable
-  bool disableRegister = true;
-
   _RegisterControllerBase(this.storage, this.store) {
-    //await _initControllers
-    controllers = <TextEditingController>[
-      nameController,
-      emailController,
-      phoneController,
-      dateController,
-      cpfController,
-      cepController,
-      streetController,
-      districtController,
-      cityController,
-      stateController
-    ].asObservable();
+    _initControllers();
   }
 
   void saveUser() async {
@@ -84,11 +67,29 @@ abstract class _RegisterControllerBase with Store {
     Modular.to.pop();
   }
 
-  /*
-  Future _initController() async {
-    nameController.addListener(({
-      
-    }));
+  @observable
+  bool emailIsOk = false;
+
+  Future _initControllers() async {
+    await _initListeners();
+    controllers = <TextEditingController>[
+      nameController,
+      emailController,
+      phoneController,
+      dateController,
+      cpfController,
+      cepController,
+      streetController,
+      districtController,
+      cityController,
+      stateController
+    ].asObservable();
   }
-  */
+
+  Future _initListeners() async {
+    emailController.addListener(() {
+      emailIsOk = emailController.text.contains("@");
+    });
+  }
+
 }
