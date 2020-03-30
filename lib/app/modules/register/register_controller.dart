@@ -81,7 +81,6 @@ abstract class _RegisterControllerBase with Store {
       ..colors = UserAvatarColors.get();
     store.add(user);
     await storage.save(user);
-    //Modular.to.pushNamedAndRemoveUntil('/', (route) => false);
     Modular.to.pop();
   }
 

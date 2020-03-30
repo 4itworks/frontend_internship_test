@@ -53,7 +53,6 @@ class HomeBody extends StatelessWidget {
               title: Text(user.name),
               subtitle: Text(user.email),
               onTap: () {
-                //int id = controller.store.users.value.length - 1 - index;
                 Modular.to.pushNamed('/user/', arguments: user);
               },
             );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:frontent_internship_test/app/modules/home/pages/user_page_controller.dart';
 import 'package:frontent_internship_test/app/shared/models/user_model.dart';
 import 'package:frontent_internship_test/app/shared/widgets/header_container.dart';
+import 'package:frontent_internship_test/app/shared/widgets/user_avatar.dart';
 
 class UserPage extends StatefulWidget {
   final UserModel user;
@@ -23,7 +22,7 @@ class _UserPageState extends State<UserPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                fieldName,
+                "$fieldName:",
                 style: TextStyle(fontSize: 17),
               ),
               Text(
@@ -41,6 +40,42 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
+  Widget nameAvatarContainer() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          UserAvatar(
+            avatarColors: widget.user.colors,
+            username: widget.user.name,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(widget.user.name,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String formatPhone() {
+    String phone = widget.user.phone;
+    try {
+      var country = phone.substring(0, 2);
+      var op = phone.substring(2, 4);
+      var extraNine = phone.substring(4, 5);
+      var phoneFirstPart = phone.substring(5, 9);
+      var phoneLastPart = phone.substring(9, phone.length);
+      phone = "+$country ($op) $extraNine.$phoneFirstPart-$phoneLastPart";
+    } catch (e) {
+      FlutterError.onError(FlutterErrorDetails(exception: e.toString()));
+    }
+    return phone;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +87,14 @@ class _UserPageState extends State<UserPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
+        leading: BackButton(color: Colors.black),
       ),
       body: ListView(
         children: <Widget>[
+          nameAvatarContainer(),
           HeaderContainer(text: "PERSONAL DATA"),
           profileField("Email", widget.user.email),
-          profileField("Phone", widget.user.phone),
+          profileField("Phone", formatPhone()),
           profileField("Date of Birth", widget.user.dateBirth),
           profileField("CPF", widget.user.cpf),
           HeaderContainer(text: "ADDRESS DATA"),
