@@ -5,6 +5,8 @@ import 'package:frontent_internship_test/app/shared/repositories/local_storage.d
 import 'package:frontent_internship_test/app/shared/store/user_store.dart';
 import 'package:mobx/mobx.dart';
 
+import 'utils/user_avatar_colors.dart';
+
 part 'register_controller.g.dart';
 
 class RegisterController = _RegisterControllerBase with _$RegisterController;
@@ -73,10 +75,12 @@ abstract class _RegisterControllerBase with Store {
       ..street = streetController.text
       ..district = districtController.text
       ..city = cityController.text
-      ..state = stateController.text;
+      ..state = stateController.text
+      ..colors = UserAvatarColors.get();
     store.add(user);
     await storage.save(user);
-    Modular.to.pushNamedAndRemoveUntil('/', (route) => false);
+    //Modular.to.pushNamedAndRemoveUntil('/', (route) => false);
+    Modular.to.pop();
   }
 
   /*

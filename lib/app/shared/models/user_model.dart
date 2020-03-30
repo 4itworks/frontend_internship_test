@@ -39,4 +39,7 @@ class UserModel extends HiveObject{
 
   @HiveField(11)
   String state;
+
+  @HiveField(12)
+  List<int> colors;
 }

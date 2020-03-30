@@ -28,13 +28,14 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..complement = fields[8] as String
       ..district = fields[9] as String
       ..city = fields[10] as String
-      ..state = fields[11] as String;
+      ..state = fields[11] as String
+      ..colors = (fields[12] as List)?.cast<int>();
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(12)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -58,6 +59,8 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(10)
       ..write(obj.city)
       ..writeByte(11)
-      ..write(obj.state);
+      ..write(obj.state)
+      ..writeByte(12)
+      ..write(obj.colors);
   }
 }

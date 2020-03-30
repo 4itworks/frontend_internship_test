@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:frontent_internship_test/app/modules/home/home_controller.dart';
@@ -25,20 +23,10 @@ class HomeBody extends StatelessWidget {
     return avatarName;
   }
 
-  int _increaseRGBValue(int value) {
-    final increment = 100;
-    final threshold = 100;
-    if (value < threshold) {
-      value += increment;
-    }
-    return value;
-  }
-
-  Widget avatarImage(String username) {
-    final rand = Random();
-    final r = _increaseRGBValue(rand.nextInt(256));
-    final g = _increaseRGBValue(rand.nextInt(256));
-    final b = _increaseRGBValue(rand.nextInt(256));
+  Widget avatarImage(List<int> avatarColors, String username) {
+    final r = avatarColors[0];
+    final g = avatarColors[1];
+    final b = avatarColors[2];
     return CircleAvatar(
       child: Text(
         avatarName(username),
@@ -60,7 +48,7 @@ class HomeBody extends StatelessWidget {
           itemBuilder: (context, index) {
             var user = controller.store.users.value[index];
             return ListTile(
-              leading: avatarImage(user.name),
+              leading: avatarImage(user.colors, user.name),
               title: Text(user.name),
               subtitle: Text(user.email),
             );
